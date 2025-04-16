@@ -113,116 +113,116 @@ const DMSToDDCalculator: React.FC = () => {
   };
 
   return (
-    <div className="flex justify-center items-center py-10">
-      <div className="w-full max-w-6xl p-6 bg-gray-800 rounded-md shadow-lg">
-        <div className="grid grid-cols-1 lg:grid-cols-10 gap-4 h-full">
-          {/* Map section */}
-          <div className="lg:col-span-7 h-96 rounded-md shadow-md">
-            <div ref={mapContainerRef} className="h-full w-full rounded-md shadow-md"></div>
+    <div className="relative h-screen w-full">
+      {/* Map Section - Fullscreen */}
+      <div
+        ref={mapContainerRef}
+        className="absolute top-0 left-0 w-full h-full z-0"
+      ></div>
+  
+      {/* Floating Calculator */}
+      <div className="absolute top-6 right-6 w-[350px] bg-gray-800 text-white p-6 rounded-lg shadow-xl z-10">
+        <h2 className="text-2xl font-semibold text-center mb-2">DMS ke DD</h2>
+        <p className="text-center text-gray-300 text-sm mb-4">
+          Masukkan koordinat dalam DMS untuk dikonversi ke DD.
+        </p>
+  
+        <div className="grid grid-cols-2 gap-4 mb-4">
+          {/* Latitude */}
+          <div>
+            <label className="block mb-1 text-xs text-gray-300">Latitude (DMS):</label>
+            <input
+              type="number"
+              placeholder="Deg"
+              value={latitude.degrees}
+              onChange={(e) => handleInputChange(e, setLatitude, 'degrees')}
+              className="w-full p-1 bg-gray-700 border border-gray-600 rounded text-white text-xs mb-1"
+            />
+            <input
+              type="number"
+              placeholder="Min"
+              value={latitude.minutes}
+              onChange={(e) => handleInputChange(e, setLatitude, 'minutes')}
+              className="w-full p-1 bg-gray-700 border border-gray-600 rounded text-white text-xs mb-1"
+            />
+            <input
+              type="number"
+              placeholder="Sec"
+              value={latitude.seconds}
+              onChange={(e) => handleInputChange(e, setLatitude, 'seconds')}
+              className="w-full p-1 bg-gray-700 border border-gray-600 rounded text-white text-xs"
+            />
           </div>
-
-          {/* Calculator section */}
-          <div className="lg:col-span-3 h-96 flex flex-col justify-between p-6 bg-gray-800 text-white rounded-md shadow-lg overflow-auto">
-            <h2 className="text-3xl font-semibold text-center mb-4">DMS ke DD</h2>
-            <p className="text-center text-gray-300 mb-4">Masukkan koordinat dalam DMS untuk dikonversi ke DD.</p>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-              <div>
-                <label className="block mb-2 text-sm text-gray-300">Latitude (DMS):</label>
-                <div className="flex flex-col gap-2">
-                  <input
-                    type="number"
-                    placeholder="Deg"
-                    value={latitude.degrees}
-                    onChange={(e) => handleInputChange(e, setLatitude, 'degrees')}
-                    className="w-full p-2 bg-gray-700 border border-gray-600 rounded text-white text-sm"
-                  />
-                  <input
-                    type="number"
-                    placeholder="Min"
-                    value={latitude.minutes}
-                    onChange={(e) => handleInputChange(e, setLatitude, 'minutes')}
-                    className="w-full p-2 bg-gray-700 border border-gray-600 rounded text-white text-sm"
-                  />
-                  <input
-                    type="number"
-                    placeholder="Sec"
-                    value={latitude.seconds}
-                    onChange={(e) => handleInputChange(e, setLatitude, 'seconds')}
-                    className="w-full p-2 bg-gray-700 border border-gray-600 rounded text-white text-sm"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block mb-2 text-sm text-gray-300">Longitude (DMS):</label>
-                <div className="flex flex-col gap-2">
-                  <input
-                    type="number"
-                    placeholder="Deg"
-                    value={longitude.degrees}
-                    onChange={(e) => handleInputChange(e, setLongitude, 'degrees')}
-                    className="w-full p-2 bg-gray-700 border border-gray-600 rounded text-white text-sm"
-                  />
-                  <input
-                    type="number"
-                    placeholder="Min"
-                    value={longitude.minutes}
-                    onChange={(e) => handleInputChange(e, setLongitude, 'minutes')}
-                    className="w-full p-2 bg-gray-700 border border-gray-600 rounded text-white text-sm"
-                  />
-                  <input
-                    type="number"
-                    placeholder="Sec"
-                    value={longitude.seconds}
-                    onChange={(e) => handleInputChange(e, setLongitude, 'seconds')}
-                    className="w-full p-2 bg-gray-700 border border-gray-600 rounded text-white text-sm"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="mb-4">
-              <label className="block mb-2 text-sm text-gray-300">Pilih Ikon Marker:</label>
-              <select
-                className="w-full p-2 bg-gray-700 border border-gray-600 rounded text-white text-sm"
-                value={selectedIcon}
-                onChange={handleIconChange}
-              >
-                <option value="default">Pilih</option>
-                <option value="https://icons.iconarchive.com/icons/crountch/one-piece-jolly-roger/256/Luffys-flag-icon.png">One Piece</option>
-                <option value="https://icons.iconarchive.com/icons/papirus-team/papirus-apps/256/dragon-ball-online-global-icon.png">Dragon Ball</option>
-              </select>
-            </div>
-
-            <div className="space-y-4">
-              <button
-                className="w-full bg-green-600 text-black py-2 rounded font-semibold uppercase hover:bg-green-700 transition duration-300 text-sm"
-                onClick={handleConversion}
-              >
-                Konversi
-              </button>
-              <button
-                className="w-full bg-blue-600 text-black py-2 rounded font-semibold uppercase hover:bg-blue-700 transition duration-300 text-sm"
-                onClick={handleAddToMaps}
-              >
-                Tambahkan ke Peta
-              </button>
-            </div>
-
-            <div className="mt-4 text-center text-gray-300">
-              {resultLat && resultLng && (
-                <p>
-                  Koordinat Decimal:<br />
-                  Latitude: {resultLat}, Longitude: {resultLng}
-                </p>
-              )}
-            </div>
+  
+          {/* Longitude */}
+          <div>
+            <label className="block mb-1 text-xs text-gray-300">Longitude (DMS):</label>
+            <input
+              type="number"
+              placeholder="Deg"
+              value={longitude.degrees}
+              onChange={(e) => handleInputChange(e, setLongitude, 'degrees')}
+              className="w-full p-1 bg-gray-700 border border-gray-600 rounded text-white text-xs mb-1"
+            />
+            <input
+              type="number"
+              placeholder="Min"
+              value={longitude.minutes}
+              onChange={(e) => handleInputChange(e, setLongitude, 'minutes')}
+              className="w-full p-1 bg-gray-700 border border-gray-600 rounded text-white text-xs mb-1"
+            />
+            <input
+              type="number"
+              placeholder="Sec"
+              value={longitude.seconds}
+              onChange={(e) => handleInputChange(e, setLongitude, 'seconds')}
+              className="w-full p-1 bg-gray-700 border border-gray-600 rounded text-white text-xs"
+            />
           </div>
         </div>
+  
+        {/* Icon Picker */}
+        <div className="mb-4">
+          <label className="block mb-1 text-xs text-gray-300">Pilih Ikon Marker:</label>
+          <select
+            className="w-full p-2 bg-gray-700 border border-gray-600 rounded text-white text-sm"
+            value={selectedIcon}
+            onChange={handleIconChange}
+          >
+            <option value="default">Pilih</option>
+            <option value="https://icons.iconarchive.com/icons/crountch/one-piece-jolly-roger/256/Luffys-flag-icon.png">One Piece</option>
+            <option value="https://icons.iconarchive.com/icons/papirus-team/papirus-apps/256/dragon-ball-online-global-icon.png">Dragon Ball</option>
+          </select>
+        </div>
+  
+        {/* Buttons */}
+        <div className="space-y-2">
+          <button
+            className="w-full bg-green-600 text-black py-2 rounded font-semibold uppercase hover:bg-green-700 transition duration-300 text-sm"
+            onClick={handleConversion}
+          >
+            Konversi
+          </button>
+          <button
+            className="w-full bg-blue-600 text-black py-2 rounded font-semibold uppercase hover:bg-blue-700 transition duration-300 text-sm"
+            onClick={handleAddToMaps}
+          >
+            Tambahkan ke Peta
+          </button>
+        </div>
+  
+        {/* Result */}
+        {resultLat && resultLng && (
+          <div className="mt-4 text-center text-xs text-gray-300">
+            <p>
+              Koordinat Decimal:<br />
+              Latitude: {resultLat}, Longitude: {resultLng}
+            </p>
+          </div>
+        )}
       </div>
     </div>
-  );
+  );  
 };
 
 export default DMSToDDCalculator;
